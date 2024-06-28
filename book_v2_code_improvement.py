@@ -11,14 +11,14 @@ def get_user_input(prompt, default=None, cast_func=str):
     return default
 
 def get_book_info(book):
-  price = book.find('p', class_="price_color").text.strip()
+  price = book.find('p', class_="price_color").text.replace("Â", "")
   price_without_sign = float(price[1:])
   book_tag = book.find('h3')
   book_name = book_tag.a["title"]
   more_info = book_tag.a["href"]
   rating = book.find('p').attrs['class'][1].lower()
   rating_to_stars = dict_rating.get(rating, '⚝ ⚝ ⚝ ⚝ ⚝')
-  return book_name, rating_to_stars, price, more_info, price_without_sign
+  return book_name[:75], rating_to_stars, price, more_info, price_without_sign
 
 def display_book_details(book_info):
   book_name, rating_to_stars, price, more_info, _ = book_info
@@ -39,8 +39,9 @@ dict_rating = {
     "five": '★ ★ ★ ★ ★'
 }
 
-highest_price = get_user_input("Enter the highest book price that you can accept (or 0 if you can accept them all): ", default=0, cast_func=float)
-format_info = get_user_input("In what format do you want all the data to be displayed? (table/detail): ", default='table').lower()
+highest_price = get_user_input("Enter the highest book price that you can accept (or 0 if you can accept them all)\n> ", default=0, cast_func=float)
+format_info = get_user_input("In what format do you want all the data to be displayed? (table/detail)\n> ", default='table').lower()
+print("Here you are...\n")
 
 html_text = requests.get('https://books.toscrape.com/').text
 soup = BeautifulSoup(html_text, 'lxml')
