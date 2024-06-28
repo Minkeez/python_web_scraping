@@ -5,6 +5,20 @@ if you want to use please read the requirement first and feel free to ask me
 
 ### Requirement Python Library
 #### 1.beautifulsoap
+```
+pip install beautifulsoup4
+```
 #### 2.requests
+```
+pip install requests
+```
 #### 3.lxml
+```
+pip install lxml
+```
 #### 4.prettytable
+```
+pip install prettytable
+```
+
+made by Phumin "HourCode" Udomdach
