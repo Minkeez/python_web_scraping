@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from prettytable import PrettyTable
 from urllib.parse import urljoin
+from tqdm import tqdm
 
 def get_user_input(prompt, default=None, cast_func=str):
   try:
@@ -42,12 +43,12 @@ dict_rating = {
 highest_price = get_user_input("Enter the highest book price that you can accept (or 0 if you can accept them all)\n> ", default=0, cast_func=float)
 format_info = get_user_input("In what format do you want all the data to be displayed? (table/detail)\n> ", default='table').lower()
 num_pages = get_user_input("How many pages do you want to scrape?\n> ", default=1, cast_func=int)
-print("Here you are...\n")
+print("")
 
 all_books_table = []
 all_book_details = []
 
-for start_page in range(num_pages):
+for start_page in tqdm(range(num_pages), desc="Scraping Pages"):
   url = f"https://books.toscrape.com/catalogue/page-{start_page+1}.html"
   html_text = requests.get(url).text
   soup = BeautifulSoup(html_text, 'lxml')
@@ -61,7 +62,8 @@ for start_page in range(num_pages):
         all_books_table.append(book_info[:3])
       else:
         all_book_details.append(book_info)
-        
+
+print("Here you are...\n")
 if format_info == "table":
   display_books_table(all_books_table)
 else:
