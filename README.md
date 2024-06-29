@@ -36,6 +36,12 @@ pip install prettytable
 pip install tqdm
 ```
 
+#### 6.curses (enable keyboard navigation for category selection)
+
+```
+pip install windows-curses
+```
+
 ---
 
 made by Phumin "HourCode" Udomdach
